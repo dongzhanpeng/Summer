@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="mrbird,blog">
+<meta name="description" content="mrbird's blog">
+<meta name="author" content="mrbird">
+<meta name="toTop" content="true">
+<link rel="Shortcut icon" href="{{$.themeBaseUrl}}/images/{{$.themeInfo.WebImgName}}">
+<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]--><script>document.documentElement.className = 'js';</script>
+<!-- js -->
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src={{$.themeBaseUrl}}/jquery-1.11.3.min.js"><\/script>');
+</script>
+<script src="{{$.themeBaseUrl}}/scroll.js"></script>
+<script src="http://at.alicdn.com/t/font_7t5uxv1tbjhbbj4i.js"></script>
+<title>
+{{if $.curIsIndex}}
+    {{$.blogInfo.Title}}
+{{else if $.curIsCate}}
+    分类-{{$.curCateTitle}}
+{{else if $.curIsSearch}}
+    搜索-{{$.keywords}}
+{{else if $.curIsTags}}
+    我的标签
+{{else if $.curIsTagPosts}}
+    标签-{{$.curTag}}
+{{else if $.curIsPost}}
+	{{$.post.Title}}
+{{else if $.curIsSingle}}
+	{{$.single.Title}}
+{{else if $.curIsArchive}}
+	归档
+{{end}}
+    
+</title>
+<link href="{{$.themeBaseUrl}}/bootstrap.css" rel="stylesheet">
+<link href="{{$.fontAwesomeUrl}}" rel="stylesheet">
+<link href="{{$.themeBaseUrl}}/style.css" rel="stylesheet">
+</head>
+<body>
+<svg class="hidden">
+	<defs>
+		<symbol id="icon-cross" viewBox="0 0 24 24">
+			<title>关闭</title>
+			<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+		</symbol>
+	</defs>
+</svg>
+<main class="main-wrap" >
+<div class="search">
+<form class="search__form" onsubmit="search(event);return false;" id="search">
+	<input type="text" placeholder="Find..." id="searchInput" class="form-control" value="{{.keywords}}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+	<span class="search__info">Hit <span style="color:#42b983">enter</span> to search or <span style="color:#42b983">ESC</span> to close</span>
+</form>
+<div class="search__related">
+	<div class="search__suggestion">
+		<h2>May I Suggest ?</h2>
+		<p> {{$.themeInfo.keyWords}}</p>
+	</div>
+</div>
+</div><!-- /search -->
+<button id="btn-search-close" class="btn btn--hidden btn--search-close" aria-label="Close search form"><svg class="icon icon--cross" title="关闭搜索"><use xlink:href="#icon-cross"></use></svg></button>
+<div id="headerAndNav" >
+    <div id="blog-title">
+        <a id="blog-title-img" href="{{$.indexUrl}}">
+            <svg class="icon emoj" aria-hidden="true">
+                <use xlink:href=""></use>
+            </svg>
+        </a>
+        <a id="blog-title">{{$.blogInfo.Title}}</a>
+    </div>
+	<nav class="cl-effect-4">
+		<a href="{{.indexUrl}}" class="{{if $.curIsIndex}}active{{end}}"><span data-hover="Home">Home</span></a>
+		<a href="{{$.archiveUrl}}" class="{{if $.curIsArchive}}active{{end}}"><span data-hover="Archives">Archives</span></a>
+		<a href="{{$.tagsUrl}}" class="{{if $.curIsTags}}active{{end}}"><span data-hover="Tags">Tags</span></a>
+		&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" id="btn-search" class="drop-down">Search</a>
+		&nbsp;&nbsp;&nbsp;<span class="hamburger hamburger--spin" type="button"> 
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+          	<div class="drop-down-menu" >
+    		    <div class="arrow"></div>
+		    	{{range $.cates}}
+				    <a href="{{$.cateUrl}}/{{.UrlTitle}}" class="drop-down">{{.Title}}</a>
+	        	{{end}}
+	        	{{range $.singles}}
+                	<a href="{{$.singleUrl}}/{{.UrlTitle}}" class="drop-down">{{.Title}}</a>
+                {{end}}
+		    </div>
+       </span>
+	</nav>
+</div>
+<style type="text/css">
+
+</style>
+<script>
+function search(e) {
+	var keywords = $("#searchInput").val();
+	if(!keywords) {
+		location.href = "{{$.searchUrl}}";
+	} else {
+        var tpl = '<form style="display: none" action="{{$.searchUrl}}" method="get">'; 
+        tpl += '<input name="keywords" value="' + keywords + '" />'; 
+        tpl += "</form"; 
+        var $tpl = $(tpl); 
+        $('body').append($tpl) 
+        $tpl.submit(); 
+        $tpl.remove(); 
+	}
+}
+;(function(window) {
+
+   'use strict';
+	var isSearch;
+	var mainContainer = document.querySelector('.main-wrap'),
+		openCtrl = document.getElementById('btn-search'),
+		closeCtrl = document.getElementById('btn-search-close'),
+		searchContainer = document.querySelector('.search'),
+		inputSearch = searchContainer.querySelector('#searchInput');
+
+	function init() {
+		initEvents();	
+	}
+
+	function initEvents() {
+		openCtrl.addEventListener('click', openSearch);
+		closeCtrl.addEventListener('click', closeSearch);
+		document.addEventListener('keyup', function(ev) {
+			// escape key.
+			if( ev.keyCode == 27 ) {
+				closeSearch();
+			}
+			if (ev.keyCode == 13 && isSearch) {
+			    search(event);
+			}
+		});
+	}
+
+	function openSearch() {
+	    isSearch = true;
+		mainContainer.classList.add('main-wrap--overlay');
+		closeCtrl.classList.remove('btn--hidden');
+		searchContainer.classList.add('search--open');
+		$("body").css({"overflow-y":"hidden"});
+		setTimeout(function() {
+			inputSearch.focus();
+		}, 500);
+	}
+
+	function closeSearch() {
+		mainContainer.classList.remove('main-wrap--overlay');
+		closeCtrl.classList.add('btn--hidden');
+		searchContainer.classList.remove('search--open');
+		$("body").css({"overflow-y":""});
+		inputSearch.value = '';
+		isSearch = false;
+	}
+
+	init();
+
+})(window);
+    $(function(){
+        var emojArr = ["icon--thinking","icon--scared","icon--happy-","icon--flushed","icon--expressionless","icon--cool-","icon--cool","icon--confused"];
+        var randomNum = Math.floor(Math.random()*emojArr.length);
+        var attrVal = "#"+emojArr[randomNum];
+        $("#blog-title-img use").attr("xlink:href",attrVal);
+        var singleTitle = "{{$.single.Title}}";
+        if(singleTitle == "Friends") $("#friends").addClass("active");
+    });
+    $("span.hamburger").click(function(){
+        var hamburger = $(this);
+        var dropdown = hamburger.find('.drop-down-menu');
+        var a = hamburger.find('.drop-down-menu a');
+        if(hamburger.hasClass("is-active")){
+            hamburger.removeClass("is-active"); 
+            dropdown.slideUp();
+        }else{
+            hamburger.addClass("is-active");
+            dropdown.slideDown();
+            dropdown.css({"z-index":"99"});
+        }
+    });
+</script>
+<script src="{{$.themeBaseUrl}}/activate-power-mode.js"></script>
+<script>
+    POWERMODE.colorful = true; 
+    POWERMODE.shake = false; 
+    document.body.addEventListener('input', POWERMODE);
+</script>

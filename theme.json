@@ -1,0 +1,11 @@
+/*
+* keyWords : 搜索区关键字推荐。
+*/
+{
+    "Name": "summer",
+    "Version": "1.0",
+    "Author": "mrbird",
+    "AuthorUrl": "mrbird.leanote.com",
+    "WebImgName": "leaf.png",
+    "keyWords": "#leanote #leanote blog #code #hello world"
+}

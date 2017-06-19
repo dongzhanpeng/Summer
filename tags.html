@@ -1,0 +1,42 @@
+{{template "header.html" .}}
+<style>
+@media screen and (min-width: 1400px) {
+.each-tag a{
+    width:180px;
+    display:inline-block;
+    margin:7px 30px 5px 30px;
+    font-size:18px;
+}}
+@media screen and (max-width: 1399px) {
+.each-tag a{
+    width:140px;
+    display:inline-block;
+    margin:7px 10px 5px 0px;
+    font-size:15px;
+}
+}
+.tags{
+    white-space:break;
+    max-width:100%;
+}
+</style>
+<div id="postsContainer">
+	<div id="posts">
+        <div class="each-tag">
+            <ul class="tags">
+                {{range $.tags}}
+                <span>
+                     <a href="{{$.tagPostsUrl}}/{{.Tag}}"><svg class="icon" aria-hidden="true" style="color:#e96900">
+                        <use xlink:href="#icon-z093"></use>
+                    </svg>&nbsp;&nbsp;&nbsp;{{.Tag}}&nbsp;<span style="color:#42B983;font-weight:500;">{{.Count}}</span></a> 
+                </span>
+                {{end}}
+            </ul>
+        </div>
+	</div>
+</div>
+
+{{template "footer.html" .}}
+
+</body>
+</html>

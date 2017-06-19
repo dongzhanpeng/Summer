@@ -1,0 +1,49 @@
+<div id="footerContainer">
+	{{$userId := $.blogInfo.UserId}}
+	<div class="container" id="footer">
+        
+    </div>
+    <div class="footer-leanote">
+    Themed by <a href="mrbird.leanote.com" class="color-summer">mrbird</a>&nbsp;
+    Powered by <a href="https://leanote.com" class="color-summer">Leanote</a>
+       
+    </div>
+</div>
+<script src="{{$.bootstrapJsUrl}}"></script>
+<script src="{{$.siteUrl}}/js/bootstrap-hover-dropdown.js"></script>
+<script>
+$(function() {
+    var $nav = $('#nav-container');
+    // 证明是手机
+    if($nav.css('visibility') != 'hidden') {
+        return;
+    }
+    var $menu = $('#menu');
+    var interval;
+    function clear() {
+        if(interval) {
+            clearInterval(interval);
+        }
+    }
+    function showNav() {
+        clear();
+        $nav.css('visibility', 'visible')
+        $menu.hide();
+    }
+    function hideNav() {
+        clear();
+        interval = setTimeout(function() {
+            $nav.css('visibility', 'hidden');
+            $menu.show();
+        }, 1000);
+    }
+    $('#menu i').hover(function() {
+        showNav();
+    });
+    $nav.hover(function() {
+        showNav();
+    }, function() {
+       hideNav(); 
+    });
+})
+</script>

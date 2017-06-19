@@ -1,0 +1,33 @@
+{{range $.posts}}
+	<div class="each-post">
+		<div class="title" id="abstract-title">
+			<a href="{{$.postUrl}}/{{.UrlTitle}}">
+				{{.Title}}
+			</a>
+		</div>
+		<div class="created-time">
+			<svg class="icon" aria-hidden="true" style="font-size:18px;color:#e96900">
+                <use xlink:href="#icon-tag"></use>
+            </svg>
+			{{if .Tags}} 
+				{{blogTags $ .Tags}}
+			{{else}}
+				无
+			{{end}}
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			{{dateFormat .CreatedTime "2006-01-02"}}
+		</div>
+		<div class="desc">
+			{{.Abstract | raw}}
+		</div>
+		<div id="moreContainer">
+		    <a class="more" href="{{$.postUrl}}/{{.UrlTitle}}">Read More</a>
+        </div>	
+	</div>
+{{else}}
+<div class="each-post">
+无
+</div>
+{{end}}
+<style>
+</style>

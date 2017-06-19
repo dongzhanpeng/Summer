@@ -1,0 +1,138 @@
+<link href="{{$.themeBaseUrl}}/prettycode.css" rel="stylesheet">
+<script src="{{$.prettifyJsUrl}}"></script>
+<style>
+@media screen and (min-width:1400px) {
+pre.prettyprint  * {
+	font-family: 'Roboto Mono',Monaco,courier,monospace;
+	font-size: 16px;
+	font-weight: 200 !important;
+	letter-spacing:0.3px;
+}
+
+}
+@media screen and (max-width:1399px) {
+	pre.prettyprint  * {
+		font-family: 'Roboto Mono',Monaco,courier,monospace;
+		font-size: 13px !important;
+		font-weight: 200 !important;
+		letter-spacing:0.3px;
+	}
+
+}
+pre.prettyprint {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
+code{
+    color: #e96900;
+    padding: 3px 5px;
+    margin: 0 2px;
+    background-color: #f8f8f8;
+    font-family: 'Roboto Mono', Monaco, courier, monospace;
+    border-radius: 2px;
+}
+.prepar{
+    position:relative;
+}
+.hljs{
+    overflow-x:hidden;
+}
+.hljs:after{
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: rgba(204,204,204,0.8);
+  text-align: right;
+  padding: 5px 10px 0;
+  line-height: 15px;
+  height: 15px;
+  font-family: 'consolas';
+}
+@media screen and (max-width:1399px) {
+   .hljs:after{
+     font-weight: 600;  
+      font-size: 1.1em;
+   }   
+}  
+@media screen and (min-width:1400px) {
+   .hljs:after{
+     font-weight: 500;  
+      font-size: 1.1m;
+   }   
+} 
+pre.brush\:sql:after{
+    content:'sql';
+}
+pre.brush\:xml:after{
+    content:'xml';
+}
+pre.brush\:java:after{
+    content:'Java';
+}
+pre.brush\:css:after{
+    content:'CSS';
+}
+pre.brush\:javascript:after{
+    content:'JS';
+}
+pre.brush\:sh:after{
+    content:'Shell';
+}
+pre.brush\:html:after{
+    content:'HTML';
+}
+pre.brush\:csharp:after{
+    content:'c#';
+}
+pre.brush\:c_cpp:after{
+    content:'c/c++';
+}
+pre.brush\:undefined:after{
+    content:'Code';
+}
+pre.brush\:objectivec:after{
+    content:'Objective-c';
+}
+pre.brush\:php:after{
+    content:'PHP';
+}
+pre.brush\:python:after{
+    content:'Python';
+}
+pre.brush\:ruby:after{
+    content:'Ruby';
+}
+pre.brush\:delphi:after{
+    content:'Delphi';
+}
+pre.brush\:golang:after{
+    content:'Golang';
+}
+pre.brush\:erlang:after{
+    content:'Erlang';
+}
+
+pre.brush\:groovy:after{
+    content:'Groovy';
+}
+pre.brush\:latex:after{
+    content:'Latex';
+}
+pre.brush\:actionScript:after{
+    content:'ActionScript';
+}
+pre.brush\:matlab:after{
+    content:'Matlab';
+}
+pre.brush\:scala:after{
+    content:'Scala';
+}
+</style>
+<script>
+$("pre").addClass("prettyprint linenums hljs");
+prettyPrint();
+$("pre").wrap("<div class='prepar'></div>");
+</script>
